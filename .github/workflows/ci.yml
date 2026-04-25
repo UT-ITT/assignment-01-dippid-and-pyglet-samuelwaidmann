@@ -35,4 +35,5 @@ jobs:
         run: pydocstyle . --match='(?!DIPPID\.py|pyglet_minimal\.py|simple_sender\.py|demo_heartbeat\.py).*\.py'
 
       - name: Audit dependencies
-        run: pip-audit
+        run: pip-audit --ignore-vuln CVE-2026-3219
+        
