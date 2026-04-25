@@ -1,5 +1,5 @@
 [tool.ruff]
 exclude = [
-  "2d_game/DIPPID.py"
-  "dippid_sender/DIPPID.py"
+  "2d_game/DIPPID.py",
+  "dippid_sender/DIPPID.py",
 ]
