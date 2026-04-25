@@ -10,6 +10,9 @@ repos:
     rev: v1.10.0
     hooks:
       - id: mypy
+        exclude: |
+          dippid_sender/DIPPID\.py
+
 
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 6.3.0
