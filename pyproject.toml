@@ -9,3 +9,19 @@ exclude = [
 
 [tool.mypy]
 exclude = "^(2d_game/DIPPID\\.py|dippid_sender/DIPPID\\.py|dippid_sender/demo_heartbeat\\.py|2d_game/pyglet_minimal\\.py|dippid_sender/simple_sender\\.py)$"
+
+
+[tool.pydocstyle]
+match = ".*\\.py"
+ignore-decorators = []
+add-ignore = []
+match-dir = ".*"
+
+# Ignore specific files
+ignore = [
+  "2d_game/DIPPID.py",
+  "dippid_sender/DIPPID.py",
+  "dippid_sender/demo_heartbeat.py",
+  "2d_game/pyglet_minimal.py",
+  "dippid_sender/simple_sender.py",
+]
