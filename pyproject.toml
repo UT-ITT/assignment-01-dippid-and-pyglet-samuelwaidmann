@@ -1,6 +1,5 @@
 [tool.ruff]
 exclude = [
-  "file1.py",
-  "file2.py",
-  "dir/ignored.py",
+  "2d_game/DIPPID.py"
+  "dippid_sender/DIPPID.py"
 ]
