@@ -1,3 +1,5 @@
+"""DIPPID accelerometer and button simulator sending UDP packets to localhost."""
+
 import socket
 import time
 import math
@@ -13,9 +15,11 @@ class AccelerometerSimulator:
     """Accelerometer simulator using simple sine waves."""
 
     def __init__(self):
+        """Initialize the simulator and store the start time."""
         self.start_time = time.time()
 
     def get_values(self):
+        """Return simulated x, y, z accelerometer values."""
         t = time.time() - self.start_time
 
         return {
@@ -26,6 +30,7 @@ class AccelerometerSimulator:
 
 
 def main():
+    """Send accelerometer and button data via UDP"""
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     accel = AccelerometerSimulator()
 
