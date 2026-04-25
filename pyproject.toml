@@ -1,0 +1,6 @@
+[tool.ruff]
+exclude = [
+  "file1.py",
+  "file2.py",
+  "dir/ignored.py",
+]
