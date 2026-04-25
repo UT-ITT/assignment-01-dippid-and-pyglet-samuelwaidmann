@@ -30,7 +30,7 @@ class AccelerometerSimulator:
 
 
 def main():
-    """Send accelerometer and button data via UDP"""
+    """Send accelerometer and button data via UDP."""
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     accel = AccelerometerSimulator()
 
