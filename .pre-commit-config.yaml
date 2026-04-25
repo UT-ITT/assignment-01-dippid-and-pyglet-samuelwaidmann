@@ -10,9 +10,8 @@ repos:
     rev: v1.10.0
     hooks:
       - id: mypy
-        files: ^(?!dippid_sender/DIPPID\.py$).*
-
-
+        pass_filenames: false
+        args: ["--exclude", "dippid_sender/DIPPID\\.py"]
 
 
   - repo: https://github.com/PyCQA/pydocstyle
