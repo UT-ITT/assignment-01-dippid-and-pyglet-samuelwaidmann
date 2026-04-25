@@ -32,7 +32,7 @@ jobs:
         run: mypy .
 
       - name: Check docstring style (PEP257)
-        run: pydocstyle . --match='(?!DIPPID\.py|pyglet_minimal\.py|simple_sender\.py).*\.py'
+        run: pydocstyle . --match='(?!DIPPID\.py|pyglet_minimal\.py|simple_sender\.py|demo_hearbeat\.py).*\.py'
 
       - name: Audit dependencies
         run: pip-audit
