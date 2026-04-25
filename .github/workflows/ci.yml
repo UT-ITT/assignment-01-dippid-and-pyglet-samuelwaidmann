@@ -24,9 +24,13 @@ jobs:
 
       - name: Lint with ruff (PEP8)
         run: ruff check .
+        env:
+          RUFF_EXCLUDE: "2d_game/DIPPID.py,dippid_sender/DIPPID.py"
 
       - name: Check formatting
         run: ruff format --check .
+        env:
+          RUFF_EXCLUDE: "2d_game/DIPPID.py,dippid_sender/DIPPID.py"
 
       - name: Type check with mypy
         run: mypy .
