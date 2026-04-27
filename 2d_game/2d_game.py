@@ -93,6 +93,18 @@ class GameState:
             batch=self.batch,
         )
 
+        self.paused = False
+        self.game_over = False
+
+        # Info text at bottom (button behaviors)
+        self.info_label = pyglet.text.Label(
+            "button_1 = pause/resume   |   button_2 = restart   |   button_3 = quit",
+            x=window.width // 2,
+            y=10,
+            anchor_x="center",
+            batch=self.batch,
+        )
+
     def _create_bricks(self) -> None:
         """Create a grid of bricks."""
         for row in range(5):
@@ -107,15 +119,32 @@ class GameState:
                 )
                 self.bricks.append(brick)
 
+    def toggle_pause(self) -> None:
+        """Pause or resume the game."""
+        if not self.game_over:
+            self.paused = not self.paused
+
+    def restart(self) -> None:
+        """Restart the game from scratch."""
+        self.__init__(self.window)
+
+    def quit(self):
+        """Quit the game."""
+        self.window.close()
+        pyglet.app.exit()
+
     def update(self, dt: float) -> None:
         """Update game state each frame."""
+        if self.paused or self.game_over:
+            return
+
         self.ball.update()
         self._handle_wall_collisions()
         self._handle_paddle_collision()
         self._handle_brick_collisions()
 
         if self.ball.y < 0:
-            pyglet.app.exit()
+            self.game_over = True
 
     def _handle_wall_collisions(self) -> None:
         """Bounce ball off window edges."""
@@ -163,11 +192,28 @@ def main() -> None:
         game.batch.draw()
 
     def update_with_dippid(dt: float) -> None:
-        """Update game state and move paddle based on DIPPID input."""
-        # Move paddle based on tilt
-        dx = controller.get_paddle_dx(window.width)
-        game.paddle.move(dx=dx, window_width=window.width)
-        # Then run normal game update
+        # BUTTON 1: Pause / Resume
+        if controller.was_pressed("button_1"):
+            if game.game_over:
+                pass  # ignore pause when game is over
+            else:
+                game.toggle_pause()
+
+        # BUTTON 2: Restart
+        if controller.was_pressed("button_2"):
+            game.restart()
+            return  # avoid updating old state in same frame
+
+        # BUTTON 3: Quit
+        if controller.was_pressed("button_3"):
+            game.quit()
+            return
+
+        # Move paddle only when active
+        if not game.paused and not game.game_over:
+            dx = controller.get_paddle_dx(window.width)
+            game.paddle.move(dx=dx, window_width=window.width)
+
         game.update(dt)
 
     pyglet.clock.schedule_interval(update_with_dippid, 1 / 60.0)

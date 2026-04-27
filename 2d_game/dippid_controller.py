@@ -37,6 +37,17 @@ class DippidTiltController:
         self._filtered_tilt = 0.0  # filtered tilt value for smoother movement
         self._filter_alpha = 0.2  # smoothing factor for low-pass filter (0.0 = no smoothing, 1.0 = max smoothing)
 
+        # Button states
+        self._buttons = {
+            "button_1": {"now": 0, "last": 0},
+            "button_2": {"now": 0, "last": 0},
+            "button_3": {"now": 0, "last": 0},
+        }
+
+        # Register callbacks
+        for b in self._buttons:
+            self.sensor.register_callback(b, self._make_button_handler(b))
+
     def _get_accel_x(self) -> Optional[float]:
         """Get the x-axis accelerometer value."""
         accel = self.sensor.get_value("accelerometer")
@@ -84,6 +95,21 @@ class DippidTiltController:
         tilt = self._filter_tilt(raw)
         tilt = -max(-1.0, min(1.0, tilt))
         return tilt * self.max_speed
+
+    def _make_button_handler(self, name):
+        """Create a button handler that updates the button state."""
+
+        def handler(value):
+            self._buttons[name]["now"] = int(value)
+
+        return handler
+
+    def was_pressed(self, name: str) -> bool:
+        """Return true exactly once when a button goes from 0 to 1."""
+        state = self._buttons[name]
+        pressed = state["now"] == 1 and state["last"] == 0
+        state["last"] = state["now"]
+        return pressed
 
     def disconnect(self) -> None:
         """Clean up sensor connection."""
