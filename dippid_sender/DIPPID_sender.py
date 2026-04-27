@@ -31,9 +31,7 @@ class AccelerometerSimulator:
 
 
 class ButtonSimulator:
-    """
-    Simulate a button that is randomly pressed and released.
-    """
+    """Simulate a button that is randomly pressed and released."""
 
     def __init__(self, initial_state=0, press_prob=0.2, release_prob=0.5):
         """Initialize the button simulator."""

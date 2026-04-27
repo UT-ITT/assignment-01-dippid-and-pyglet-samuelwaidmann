@@ -201,7 +201,7 @@ class GameState:
 
 
 def main() -> None:
-    """Main function to set up game and start event loop."""
+    """Set up game and start event loop."""
     window = pyglet.window.Window(width=800, height=600, caption="Breakout Game")
     game = GameState(window)
     controller = DippidTiltController(port=5700)
