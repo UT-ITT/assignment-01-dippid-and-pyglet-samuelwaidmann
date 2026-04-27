@@ -1,4 +1,5 @@
 """2d game using pyglet and DIPPID for input.
+
 Game code adapted from https://talstra.net/docs/templates/python/py-brake-out-game/
 
 Run this python file to start the game. Use the DIPPID sender to control the paddle with accelerometer and gyroscope data.
@@ -55,6 +56,7 @@ class GameState:
     """Encapsulates all game objects and update logic."""
 
     def __init__(self, window: pyglet.window.Window) -> None:
+        """Initialize game state and create all game objects."""
         self.window = window
         self.batch = pyglet.graphics.Batch()
 
@@ -199,6 +201,7 @@ class GameState:
 
 
 def main() -> None:
+    """Main function to set up game and start event loop."""
     window = pyglet.window.Window(width=800, height=600, caption="Breakout Game")
     game = GameState(window)
     controller = DippidTiltController(port=5700)

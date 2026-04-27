@@ -1,5 +1,6 @@
 """
 DIPPID-based tilt controller for horizontal paddle movement.
+
 Uses accelerometer["x"] and gyroscope["z"].
 """
 
@@ -9,9 +10,7 @@ from DIPPID import SensorUDP
 
 
 class DippidTiltController:
-    """
-    Map DIPPID accelerometer + gyroscope data to horizontal paddle movement.
-    """
+    """Map DIPPID accelerometer + gyroscope data to horizontal paddle movement."""
 
     def __init__(
         self,
@@ -22,6 +21,8 @@ class DippidTiltController:
         max_speed: float = 15.0,
     ) -> None:
         """
+        Initialize the DIPPID tilt controller.
+
         :param port: UDP port to listen on.
         :param accel_weight: How much to rely on accelerometer vs gyroscope (0.0 to 1.0).
         :param gyro_weight: How much to rely on gyroscope vs accelerometer (0.0 to 1.0).

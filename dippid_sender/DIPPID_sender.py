@@ -42,6 +42,7 @@ class ButtonSimulator:
         self.release_prob = release_prob
 
     def update(self):
+        """Randomly update the button state based on press and release probabilities."""
         if self.state == 0:
             # currently not pressed, press based on press probability
             if random.random() < self.press_prob:
@@ -56,6 +57,7 @@ class ButtonSimulator:
 def create_message(accel_values, button_state):
     """
     Create a JSON string compatible with DIPPID-style messages.
+
     Example:
     {
         "accelerometer": {"x": 0.1, "y": -0.2, "z": 0.9},
