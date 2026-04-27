@@ -1,10 +1,22 @@
 """2d game using pyglet and DIPPID for input.
-Code adapted from https://talstra.net/docs/templates/python/py-brake-out-game/"""
+Game code adapted from https://talstra.net/docs/templates/python/py-brake-out-game/
+
+Run this python file to start the game. Use the DIPPID sender to control the paddle with accelerometer and gyroscope data.
+
+How the game works:
+- Move the paddle left and right by tilting the device to the left or right. The more you tilt, the faster the paddle moves.
+- The ball will bounce off the paddle and the walls. Try to keep it from falling below the paddle.
+- When the ball hits a brick, the brick will be destroyed and you earn points.
+- The game ends when the ball falls below the paddle or all bricks are destroyed. Try to get the highest score possible!
+
+"""
 
 from __future__ import annotations
 import pyglet
 from pyglet.shapes import Rectangle
-from pyglet.window import key
+from dippid_controller import DippidTiltController
+
+PORT = 5700
 
 
 class Paddle(Rectangle):
@@ -141,23 +153,24 @@ class GameState:
 
 
 def main() -> None:
-    """Create window and run game."""
     window = pyglet.window.Window(width=800, height=600, caption="Breakout Game")
     game = GameState(window)
-
-    @window.event
-    def on_key_press(symbol: int, modifiers: int) -> None:
-        if symbol == key.LEFT:
-            game.paddle.move(dx=-40, window_width=window.width)
-        elif symbol == key.RIGHT:
-            game.paddle.move(dx=40, window_width=window.width)
+    controller = DippidTiltController(port=5700)
 
     @window.event
     def on_draw() -> None:
         window.clear()
         game.batch.draw()
 
-    pyglet.clock.schedule_interval(game.update, 1 / 60.0)
+    def update_with_dippid(dt: float) -> None:
+        """Update game state and move paddle based on DIPPID input."""
+        # Move paddle based on tilt
+        dx = controller.get_paddle_dx(window.width)
+        game.paddle.move(dx=dx, window_width=window.width)
+        # Then run normal game update
+        game.update(dt)
+
+    pyglet.clock.schedule_interval(update_with_dippid, 1 / 60.0)
     pyglet.app.run()
 
 
