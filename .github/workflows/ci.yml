@@ -26,14 +26,13 @@ jobs:
         run: ruff check .
         
       - name: Check formatting
-        run: ruff format --check .
+        run: ruff format --check .        
         
-      - name: Type check with mypy
-        run: mypy .
-
       - name: Check docstring style (PEP257)
         run: pydocstyle . --match='(?!DIPPID\.py|pyglet_minimal\.py|simple_sender\.py|demo_heartbeat\.py).*\.py'
-
+        
       - name: Audit dependencies
         run: pip-audit --ignore-vuln CVE-2026-3219
         
+      - name: Type check with mypy
+        run: mypy .
