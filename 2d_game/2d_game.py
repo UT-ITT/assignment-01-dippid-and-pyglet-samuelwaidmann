@@ -98,10 +98,22 @@ class GameState:
 
         # Info text at bottom (button behaviors)
         self.info_label = pyglet.text.Label(
-            "button_1 = pause/resume   |   button_2 = restart   |   button_3 = quit",
+            "Buttons: 1: pause/resume | 2: restart | 3: quit",
             x=window.width // 2,
             y=10,
             anchor_x="center",
+            batch=self.batch,
+        )
+
+        # Win text (shown when game won)
+        self.win_label = pyglet.text.Label(
+            "",
+            x=self.window.width // 2,
+            y=self.window.height // 2,
+            anchor_x="center",
+            anchor_y="center",
+            font_size=32,
+            color=(255, 255, 0, 255),
             batch=self.batch,
         )
 
@@ -179,6 +191,11 @@ class GameState:
                 self.ball.dy *= -1
                 self.score += 1
                 self.score_label.text = f"Score: {self.score}"
+
+        # Win condition: all bricks destroyed
+        if all(not b.alive for b in self.bricks):
+            self.game_over = True
+            self.win_label.text = "YOU WIN! Press button_2 to restart."
 
 
 def main() -> None:
